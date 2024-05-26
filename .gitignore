@@ -1,0 +1,7 @@
+__pycache__/
+venv/
+.env
+.idea/
+images/
+images_apod/
+images_epic/
