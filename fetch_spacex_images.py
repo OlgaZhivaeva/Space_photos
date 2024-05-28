@@ -26,6 +26,7 @@ def spacex():
     for url_number, url_image in enumerate(url_image_list, 1):
         file_extension = get_file_extension(url_image)
         path_image = f'{dir_name}/spacex_{url_number}{file_extension}'
+        print(url_image)
         fetch_and_save(url_image, path_image)
 
 
