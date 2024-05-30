@@ -3,5 +3,4 @@ venv/
 .env
 .idea/
 images/
-images_apod/
-images_epic/
+

@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from pathlib import Path
 from fetch_helper import get_file_extension, fetch_and_save
 
-
 load_dotenv()
 API_KEY = os.environ["API_KEY"]
 
@@ -13,10 +12,11 @@ def nasa_apod():
     """" Функция для получения картинок дня Nasa """
     payload = {
         'api_key': API_KEY,
-        'count': 3
+        'count': 5
     }
+
     url_to_images = "https://api.nasa.gov/planetary/apod"
-    dir_name = 'images_apod'
+    dir_name = 'images'
     Path(dir_name).mkdir(parents=True, exist_ok=True)
 
     response = requests.get(url_to_images, params=payload)
