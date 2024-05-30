@@ -36,7 +36,7 @@ By default, the publication frequency is four hours
 
 To download launch photos from the site, you can specify the launch id. By default, the last launch.
 ```commandline
-python fetch_spacex_images.py -l 'launch_id'
+python fetch_spacex_images.py -l launch_id
 ```
 
 To download an astronomical picture of the day from the Nasa website, enter
@@ -54,7 +54,7 @@ python fetch_nasa_epic_images.py
 To publish one photo, run the script specifying the path to the file.
 By default, a randomly selected photo will be published.
 ```commandline
-python space_photos_bot.py
+python space_photos_bot.py -p path_to_file
 ```
 
 For automated publishing, run the script
