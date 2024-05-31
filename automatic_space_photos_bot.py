@@ -19,7 +19,7 @@ def main():
         while True:
             random.shuffle(image_list)
             for image in image_list:
-                bot.send_document(chat_id="@space_and_space", document=open(f'images/{image}', 'rb'))
+                bot.send_document(chat_id=ID_CHAT, document=open(f'images/{image}', 'rb'))
                 time.sleep(int(post_frequency))
 
     else:
