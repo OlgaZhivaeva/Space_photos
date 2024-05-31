@@ -19,9 +19,9 @@ def spacex():
     dir_name = 'images'
     Path(dir_name).mkdir(parents=True, exist_ok=True)
 
-    response = requests.get(url_to_images)
-    response.raise_for_status()
-    url_image_list = response.json()['links']['flickr']['original']
+    response_images = requests.get(url_to_images)
+    response_images.raise_for_status()
+    url_image_list = response_images.json()['links']['flickr']['original']
 
     for url_number, url_image in enumerate(url_image_list, 1):
         file_extension = get_file_extension(url_image)
