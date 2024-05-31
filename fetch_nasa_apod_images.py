@@ -19,9 +19,9 @@ def nasa_apod():
     dir_name = 'images'
     Path(dir_name).mkdir(parents=True, exist_ok=True)
 
-    response = requests.get(url_to_images, params=payload)
-    response.raise_for_status()
-    url_image_list = response.json()
+    response_images = requests.get(url_to_images, params=payload)
+    response_images.raise_for_status()
+    url_image_list = response_images.json()
 
     for url_number, image in enumerate(url_image_list, 1):
         url_image = image['url']
