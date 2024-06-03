@@ -25,23 +25,28 @@ and get an API token
 ### Create a file `.env`:
 
 ```commandline
-API_KEY=your_Nasa_API_token
+NASA_API_KEY=your_Nasa_API_token
 TELEGRAM_TOKEN=your_telegram_token
 POST_FREQUENSY=frequency_of_publications_in_seconds
-ID_CHAT='your_channel_ID'
+TG_CHAT_ID='your_channel_ID'
+IMAGES_DIR_PATH=path_to_the_image_directory
 ```
-By default, the publication frequency is four hours
+By default, the publication frequency is four hours. 
+If you do not specify the path to the image directory, the Images will be uploaded
+to the project directory `images`
 
 ### Download photos of space
 
-To download launch photos from the site, you can specify the launch id. By default, the last launch.
+To download launch photos from the site, you can specify the launch id.
+By default, the last launch.
 ```commandline
 python fetch_spacex_images.py -l launch_id
 ```
 
-To download an astronomical picture of the day from the Nasa website, enter
+To download astronomical images of the day from the Nasa website, enter the command
+specifying the number. By default, 10 photos will be downloaded.
 ```commandline
-python fetch_nasa_apod_images.py
+python fetch_nasa_apod_images.py -c count
 ```
 
 To download epic photos from the Nasa website, enter
