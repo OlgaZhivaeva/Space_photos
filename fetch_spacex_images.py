@@ -14,7 +14,7 @@ def get_launch_id():
     return args.launch_id
 
 
-def get_spacex_images():
+def main():
     """"Получить картинки SpaceX."""
     load_dotenv()
     dir_name = os.getenv('IMAGES_DIR_PATH', 'images')
@@ -25,13 +25,13 @@ def get_spacex_images():
 
     response_images = requests.get(url_to_images)
     response_images.raise_for_status()
-    url_image_list = response_images.json()['links']['flickr']['original']
+    url_images = response_images.json()['links']['flickr']['original']
 
-    for url_number, url_image in enumerate(url_image_list, 1):
-        file_extension = get_file_extension(url_image)
-        path_image = Path(dir_name, f'spacex_{url_number}{file_extension}')
-        fetch_and_save(url_image, path_image)
+    for url_number, image_url in enumerate(url_images, 6):
+        file_extension = get_file_extension(image_url)
+        image_paht = Path(dir_name, f'spacex_{url_number}{file_extension}')
+        fetch_and_save(image_url, image_paht)
 
 
 if __name__ == "__main__":
-    get_spacex_images()
+    main()

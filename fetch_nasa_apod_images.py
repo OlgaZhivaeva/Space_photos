@@ -5,18 +5,18 @@ from pathlib import Path
 from fetch_helper import get_file_extension, fetch_and_save, get_count_of_images
 
 
-def get_nasa_apod_images():
+def main():
     """"Получить картинки дня Nasa."""
     load_dotenv()
-    NASA_API_KEY = os.environ["NASA_API_KEY"]
+    nasa_api_key = os.environ["NASA_API_KEY"]
     dir_name = os.getenv('IMAGES_DIR_PATH', 'images')
     try:
-        count = int(get_count_of_images())
-    except:
+        count = get_count_of_images()
+    except TypeError():
         count = 10
 
     payload = {
-        'api_key': NASA_API_KEY,
+        'api_key': nasa_api_key,
         'count': count
     }
 
@@ -36,4 +36,4 @@ def get_nasa_apod_images():
 
 
 if __name__ == "__main__":
-    get_nasa_apod_images()
+    main()

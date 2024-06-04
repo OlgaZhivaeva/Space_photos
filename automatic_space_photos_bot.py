@@ -4,31 +4,31 @@ import telegram
 import time
 from dotenv import load_dotenv
 from pathlib import Path
+from fetch_helper import send_document, get_all_images
 
 
 def main():
     load_dotenv()
-    TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
-    TG_CHAT_ID = os.environ["TG_CHAT_ID"]
+    telegram_token = os.environ["TELEGRAM_TOKEN"]
+    tg_chat_id = os.environ["TG_CHAT_ID"]
     post_frequency = os.getenv('POST_FREQUENСY', 14400)
     dir_name = os.getenv('IMAGES_DIR_PATH', 'images')
 
-    bot = telegram.Bot(token=TELEGRAM_TOKEN)
+    bot = telegram.Bot(token=telegram_token)
 
     if os.path.isdir(dir_name):
-        _, _, image_names = list(os.walk(dir_name))[0]
+        image_names = get_all_images(dir_name)
 
         while True:
             random.shuffle(image_names)
             for name in image_names:
-                with open(Path(dir_name, name), 'rb') as image:
+                try:
+                    send_document(Path(dir_name, name))
+                except ConnectionError('No internet connection'):
                     try:
-                       bot.send_document(chat_id=TG_CHAT_ID, document=image)
-                    except telegram.error.NetworkError('No internet connection'):
-                        try:
-                            bot.send_document(chat_id=TG_CHAT_ID, document=image)
-                        except telegram.error.NetworkError('No internet connection'):
-                            time.sleep(20)
+                        send_document(Path(dir_name, name))
+                    except ConnectionError('No internet connection'):
+                        time.sleep(20)
                 time.sleep(int(post_frequency))
 
     else:

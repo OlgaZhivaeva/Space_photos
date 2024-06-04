@@ -4,6 +4,7 @@ import random
 import telegram
 from dotenv import load_dotenv
 from pathlib import Path
+from fetch_helper import send_document, get_all_images
 
 
 def get_path_to_photo():
@@ -24,16 +25,15 @@ def main():
     path_to_photo = get_path_to_photo()
 
     if path_to_photo is None:
-        if os.path.isdir('images'):
-            _, _, image_list = list(os.walk('images'))[0]
-            path_to_photo = Path(dir_name, random.choice(image_list))
-            bot.send_document(chat_id=TG_CHAT_ID, document=open(path_to_photo, 'rb'))
+        if os.path.isdir(dir_name):
+            images = get_all_images(dir_name)
+            path_to_photo = Path(dir_name, random.choice(images))
+            send_document(path_to_photo)
         else:
             print('There is no catalog with photos. Upload photos.')
     else:
         if os.path.isfile(path_to_photo):
-            with open(path_to_photo, 'rb') as path:
-                bot.send_document(chat_id=TG_CHAT_ID, document=path)
+            send_document(path_to_photo)
         else:
             print('The file does not exist. Specify the correct file path.')
 
