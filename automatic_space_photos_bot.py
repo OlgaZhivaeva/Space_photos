@@ -16,23 +16,16 @@ def main():
 
     bot = telegram.Bot(token=telegram_token)
 
-    if os.path.isdir(dir_name):
-        image_names = get_all_images(dir_name)
-
-        while True:
-            random.shuffle(image_names)
-            for name in image_names:
-                try:
-                    send_document(Path(dir_name, name))
-                except ConnectionError('No internet connection'):
-                    try:
-                        send_document(Path(dir_name, name))
-                    except ConnectionError('No internet connection'):
-                        time.sleep(20)
-                time.sleep(int(post_frequency))
-
-    else:
+    if not os.path.isdir(dir_name):
         print('There is no catalog with photos. Upload photos.')
+        return
+    image_names = get_all_images(dir_name)
+
+    while True:
+        random.shuffle(image_names)
+        for name in image_names:
+            send_document(bot, tg_chat_id, Path(dir_name, name))
+            time.sleep(int(post_frequency))
 
 
 if __name__ == "__main__":

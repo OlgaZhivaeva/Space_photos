@@ -3,7 +3,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from pathlib import Path
-from fetch_helper import get_file_extension, fetch_and_save
+from fetch_helper import get_file_extension, fetch_and_save, get_start_count
 
 
 def get_launch_id():
@@ -25,12 +25,13 @@ def main():
 
     response_images = requests.get(url_to_images)
     response_images.raise_for_status()
-    url_images = response_images.json()['links']['flickr']['original']
+    images_urls = response_images.json()['links']['flickr']['original']
+    start_count = get_start_count(dir_name, r'spacex_')
 
-    for url_number, image_url in enumerate(url_images, 6):
+    for url_number, image_url in enumerate(images_urls, start_count):
         file_extension = get_file_extension(image_url)
-        image_paht = Path(dir_name, f'spacex_{url_number}{file_extension}')
-        fetch_and_save(image_url, image_paht)
+        image_path = Path(dir_name, f'spacex_{url_number}{file_extension}')
+        fetch_and_save(image_url, image_path)
 
 
 if __name__ == "__main__":

@@ -17,23 +17,23 @@ def get_path_to_photo():
 
 def main():
     load_dotenv()
-    TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
-    TG_CHAT_ID = os.environ["TG_CHAT_ID"]
+    telegram_token = os.environ["TELEGRAM_TOKEN"]
+    tg_chat_id = os.environ["TG_CHAT_ID"]
     dir_name = os.getenv('IMAGES_DIR_PATH', 'images')
 
-    bot = telegram.Bot(token=TELEGRAM_TOKEN)
+    bot = telegram.Bot(token=telegram_token)
     path_to_photo = get_path_to_photo()
 
     if path_to_photo is None:
         if os.path.isdir(dir_name):
             images = get_all_images(dir_name)
             path_to_photo = Path(dir_name, random.choice(images))
-            send_document(path_to_photo)
+            send_document(bot, tg_chat_id, path_to_photo)
         else:
             print('There is no catalog with photos. Upload photos.')
     else:
         if os.path.isfile(path_to_photo):
-            send_document(path_to_photo)
+            send_document(bot, tg_chat_id, path_to_photo)
         else:
             print('The file does not exist. Specify the correct file path.')
 
