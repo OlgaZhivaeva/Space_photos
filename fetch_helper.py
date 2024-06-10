@@ -2,6 +2,7 @@ import argparse
 import os
 import re
 import requests
+import telegram
 from os.path import splitext
 from os.path import split
 from retry import retry
@@ -34,17 +35,12 @@ def get_count_of_images():
     return args.count
 
 
-@retry(delay=20)
+@retry(exceptions=telegram.error.NetworkError, delay=20)
 def send_document(bot, tg_chat_id, path_to_image):
     """Опубликовать картинку."""
     with open(path_to_image, 'rb') as image:
-        while True:
-            try:
-                bot.send_document(chat_id=tg_chat_id, document=image)
-                break
-            except ConnectionError:
-                print('No internet connection')
-                continue
+         bot.send_document(chat_id=tg_chat_id, document=image)
+
 
 
 def get_all_images(path_to_dir):
